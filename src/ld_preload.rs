@@ -40,7 +40,7 @@ macro_rules! hook {
 
             #[no_mangle]
             pub unsafe extern fn $real_fn ( $($v : $t),* ) -> $r {
-                ::std::panic::catch_unwind(|| $hook_fn ( $($v),* )).unwrap_or_else(|err| match err.downcast::<Box<dyn Display>>(){
+                ::std::panic::catch_unwind(|| $hook_fn ( $($v),* )).unwrap_or_else(|err| match err.downcast::<Box<dyn ::std::fmt::Display>>(){
                     Some(e) => eprintln!("Panic occurred while executing hook {}: {}", stringify!($real_fn), e),
                     None => eprintln!("Panic occurred while executing hook {}", stringify!($real_fn)),
                 })
